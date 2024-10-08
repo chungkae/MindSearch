@@ -1,10 +1,7 @@
 import os
-from dotenv import load_dotenv
 
 from lagent.llms import (GPTAPI, INTERNLM2_META, HFTransformerCasualLM,
                          LMDeployClient, LMDeployServer)
-
-load_dotenv()
 
 internlm_server = dict(type=LMDeployServer,
                        path='internlm/internlm2_5-7b-chat',
@@ -39,10 +36,18 @@ internlm_hf = dict(type=HFTransformerCasualLM,
                    stop_words=['<|im_end|>'])
 # openai_api_base needs to fill in the complete chat api address, such as: https://api.openai.com/v1/chat/completions
 gpt4 = dict(type=GPTAPI,
-            model_type=os.environ.get('OPENAI_MODEL', 'gpt-4o'),
+            model_type='gpt-4-turbo',
             key=os.environ.get('OPENAI_API_KEY', 'YOUR OPENAI API KEY'),
             openai_api_base=os.environ.get('OPENAI_API_BASE', 'https://api.openai.com/v1/chat/completions'),
             )
+            
+gpt4 = dict(type=GPTAPI,
+            model_type='gpt-4-turbo',
+            key=os.environ.get('OPENAI_API_KEY', 'YOUR OPENAI API KEY'))
+
+gpt4omini = dict(type=GPTAPI,
+            model_type='gpt-4o-mini',
+            key=os.environ.get('OPENAI_API_KEY', 'YOUR OPENAI API KEY'))
 
 url = 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation'
 qwen = dict(type=GPTAPI,
@@ -63,7 +68,7 @@ qwen = dict(type=GPTAPI,
             stop_words=['<|im_end|>'])
 
 internlm_silicon = dict(type=GPTAPI,
-                        model_type=os.environ.get('SILICON_MODEL', 'internlm/internlm2_5-7b-chat'),
+                        model_type='internlm/internlm2_5-7b-chat',
                         key=os.environ.get('SILICON_API_KEY', 'YOUR SILICON API KEY'),
                         openai_api_base='https://api.siliconflow.cn/v1/chat/completions',
                         meta_template=[
